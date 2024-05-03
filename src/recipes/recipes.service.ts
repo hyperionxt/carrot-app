@@ -128,14 +128,4 @@ export class RecipesService {
       );
     }
   }
-
-  async autocompleteSearch() {
-    try {
-    } catch (error) {
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
 }
