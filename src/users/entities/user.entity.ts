@@ -1,0 +1,49 @@
+import { Recipe } from 'src/recipes/entities/recipe.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Index,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+export enum Role {
+  ADMIN = 'ADMIN',
+  REGULAR = 'REGULAR',
+}
+
+@Entity({ name: 'users' })
+export class User {
+  @PrimaryGeneratedColumn()
+  @Index()
+  id: number;
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  lastname?: string;
+
+  @Column({ unique: true })
+  email: string;
+
+  @Column()
+  password: string;
+
+  @ManyToMany(() => Recipe)
+  @JoinTable()
+
+  favorites: Recipe[];
+  @Column()
+  role: Role;
+  @CreateDateColumn({
+    type: 'timestamp',
+  })
+  createdAt: Date;
+  @UpdateDateColumn({
+    type: 'timestamp',
+  })
+  updatedAt: Date;
+}
