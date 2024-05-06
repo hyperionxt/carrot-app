@@ -4,7 +4,7 @@ const { NODE_ENV } = process.env;
 
 ConfigModule.forRoot();
 //APP_SETUP
-export const APP_PORT: number = parseInt(process.env.APP_PORT);
+export const APP_PORT = parseInt(process.env.APP_PORT);
 
 /*DB_SETUP*/
 export const DB_TYPE: SqlDatabase = process.env.DB_TYPE as SqlDatabase;
