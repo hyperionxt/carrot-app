@@ -5,7 +5,7 @@ import { LoginUserDto } from './dto/sign-in.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
-import { SignInGuard } from './sign-in.guard';
+import { SignInGuard } from '../guards/auth-sign-in.guard';
 
 @ApiTags('Authentication')
 @Controller('auth')

@@ -4,7 +4,8 @@ import { compare, hash } from 'bcrypt';
 import { PaginationQueryDto } from 'src/pagination/pagination-query.dto';
 import { Recipe } from 'src/recipes/entities/recipe.entity';
 import { RecipesService } from 'src/recipes/recipes.service';
-import { Profile } from 'src/types';
+
+import { Profile } from 'src/types/profile.type';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';

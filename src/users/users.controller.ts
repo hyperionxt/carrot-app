@@ -13,9 +13,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Recipe } from 'src/recipes/entities/recipe.entity';
-import { Payload } from 'src/types';
+import { UserPayload } from 'src/types/user-payload.type';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -28,21 +28,21 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('profile')
-  getProfile(@Request() req: Payload) {
+  getProfile(@Request() req: UserPayload) {
     return this.usersService.getProfile(req.user.id);
   }
 
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Patch('update')
-  update(@Body() updateUserDto: UpdateUserDto, @Request() req: Payload) {
+  update(@Body() updateUserDto: UpdateUserDto, @Request() req: UserPayload) {
     return this.usersService.update(req.user.id, updateUserDto);
   }
 
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Delete('delete')
-  remove(@Request() req: Payload) {
+  remove(@Request() req: UserPayload) {
     return this.usersService.remove(req.user.id);
   }
   @Get('/findByIngredients')
@@ -56,7 +56,7 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('favorites')
-  getFavorites(@Request() req: Payload): Promise<Recipe[]> {
+  getFavorites(@Request() req: UserPayload): Promise<Recipe[]> {
     return this.usersService.getFavorites(req.user.id);
   }
 
@@ -64,7 +64,7 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Post('/add/:id')
   addToFavorites(
-    @Request() req: Payload,
+    @Request() req: UserPayload,
     @Param('id', ParseIntPipe) id: number,
   ): Promise<User> {
     return this.usersService.addToFavorites(req.user.id, id);
@@ -73,7 +73,7 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Patch('/remove/:id')
   removeFromfavorites(
-    @Request() req: Payload,
+    @Request() req: UserPayload,
     @Param('id', ParseIntPipe) id: number,
   ): Promise<User> {
     return this.usersService.removeFromFavorites(req.user.id, id);

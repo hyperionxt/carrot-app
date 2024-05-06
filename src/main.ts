@@ -3,6 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { APP_PORT } from './config';
+//import { databaseBackupAutoTask } from './utils/autotasks/backups.autotask';
 
 async function bootstrap() {
   try {
@@ -25,7 +27,9 @@ async function bootstrap() {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/doc', app, document);
-    await app.listen(3000);
+    //Backups
+    //databaseBackupAutoTask();
+    await app.listen(APP_PORT);
   } catch (e) {
     throw new Error(e);
   }

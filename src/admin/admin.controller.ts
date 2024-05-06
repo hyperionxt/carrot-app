@@ -15,7 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from 'src/pagination/pagination-query.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
-import { AdminGuard } from './admin.guard';
+import { AdminGuard } from '../guards/admin.guard';
 import { AdminService } from './admin.service';
 import { AdminUpdateUserDto } from './dto/admin-update-user.dto';
 
@@ -44,8 +44,8 @@ export class AdminController {
   findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
     return this.adminService.findOne(id);
   }
-  //@ApiBearerAuth()
-  //@UseGuards(AdminGuard)
+  @ApiBearerAuth()
+  @UseGuards(AdminGuard)
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,

@@ -40,5 +40,4 @@ export class AdminUpdateUserDto {
   @IsEnum(Role)
   @IsOptional()
   role?: Role;
-
 }

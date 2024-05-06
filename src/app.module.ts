@@ -1,27 +1,34 @@
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import {
   DB_HOST,
-  DB_NAME_PROD,
+  DB_NAME,
+  DB_NAME_TEST,
   DB_PASSWORD,
   DB_PORT,
   DB_TYPE,
   DB_USERNAME,
+  ENV,
 } from './config';
-import { UsersModule } from './users/users.module';
 import { RecipesModule } from './recipes/recipes.module';
+import { UsersModule } from './users/users.module';
+import { DatabaseBackupAutoTask } from './utils/tasks-schedule/backups.autotask';
+
+const dbName: string = ENV === 'test' ? DB_NAME_TEST : DB_NAME;
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: DB_TYPE,
       host: DB_HOST,
       port: DB_PORT,
       username: DB_USERNAME,
       password: DB_PASSWORD,
-      database: DB_NAME_PROD,
+      database: dbName,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
@@ -31,7 +38,7 @@ import { RecipesModule } from './recipes/recipes.module';
     RecipesModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [DatabaseBackupAutoTask],
   exports: [],
 })
 export class AppModule {}
