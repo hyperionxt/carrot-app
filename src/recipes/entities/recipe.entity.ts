@@ -3,13 +3,12 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'recipes' })
 export class Recipe {
   @PrimaryGeneratedColumn()
- 
   id: number;
   @Column({ unique: true })
   title: string;
@@ -17,7 +16,6 @@ export class Recipe {
   country: string;
   @Column()
   description: string;
-  
   @Column({ array: true })
   ingredients: string;
   @Column()
@@ -26,4 +24,8 @@ export class Recipe {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
+  @Column({ default: 0 })
+  favorites: number;
+  @Column({ default: 0 })
+  clicks: number;
 }

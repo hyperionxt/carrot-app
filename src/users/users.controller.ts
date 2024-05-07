@@ -13,7 +13,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { Recipe } from 'src/recipes/entities/recipe.entity';
 import { UserPayload } from 'src/types/user-payload.type';
 import { UpdateUserDto } from './dto/update-user.dto';

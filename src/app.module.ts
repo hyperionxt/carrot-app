@@ -4,15 +4,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import {
-  DB_HOST,
-  DB_NAME,
-  DB_NAME_TEST,
-  DB_PASSWORD,
-  DB_PORT,
-  DB_TYPE,
-  DB_USERNAME,
-  ENV,
-} from './config';
+    DB_HOST,
+    DB_NAME,
+    DB_NAME_TEST,
+    DB_PASSWORD,
+    DB_PORT,
+    DB_TYPE,
+    DB_USERNAME,
+    ENV,
+} from './config/config';
 import { RecipesModule } from './recipes/recipes.module';
 import { UsersModule } from './users/users.module';
 import { DatabaseBackupAutoTask } from './utils/tasks-schedule/backups.autotask';

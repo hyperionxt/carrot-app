@@ -3,7 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import { APP_PORT } from './config';
+import { APP_PORT } from './config/config';
+import './config/serverConfig';
 
 async function bootstrap() {
   try {

@@ -7,7 +7,7 @@ import {
   DB_PORT,
   DB_USERNAME,
   DUMP_PATH,
-} from 'src/config';
+} from 'src/config/config';
 
 export const backupDatabaseFormat = () => {
   const format = 'backup';

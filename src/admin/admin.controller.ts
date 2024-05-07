@@ -15,9 +15,9 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from 'src/pagination/pagination-query.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
-import { AdminGuard } from '../guards/admin.guard';
 import { AdminService } from './admin.service';
 import { AdminUpdateUserDto } from './dto/admin-update-user.dto';
+import { AdminGuard } from './guards/admin.guard';
 
 @ApiTags('Admin')
 @Controller('admin')

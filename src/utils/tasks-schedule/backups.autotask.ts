@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { backupDatabaseFormat } from '../backups/backups-generator';
 
 
 
 @Injectable()
 export class DatabaseBackupAutoTask {
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  @Cron('59 23 * * *')
   handleCron() {
     backupDatabaseFormat();
     console.log('----Database backup in progress----');

@@ -1,5 +1,5 @@
 import { ConfigModule } from '@nestjs/config';
-import { SqlDatabase } from './types/db.type';
+import { SqlDatabase } from '../types/db.type';
 const { NODE_ENV } = process.env;
 
 ConfigModule.forRoot();
@@ -7,7 +7,7 @@ ConfigModule.forRoot();
 export const APP_PORT = parseInt(process.env.APP_PORT);
 
 /*DB_SETUP*/
-export const DB_TYPE: SqlDatabase = process.env.DB_TYPE as SqlDatabase;
+export const DB_TYPE = process.env.DB_TYPE as SqlDatabase;
 export const DB_PORT = parseInt(process.env.DB_PORT);
 export const DB_HOST = process.env.DB_HOST;
 export const DB_USERNAME = process.env.DB_USERNAME;
