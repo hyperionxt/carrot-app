@@ -2,14 +2,16 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
+## Description
 
+This app serves to offer recipes based on ingredients that users have available. You can not search using specific names of recipes, the only way to search for recipes is by ingredients.
 
 ## Installation
 
 ```bash
 $ pnpm install
 ```
-``` ENV VARS
+```.env
 APP_PORT=XXXX
 DB_TYPE= postgres || mariadb ||myslq || sql3, etc
 DB_HOST= XXXXXXX
