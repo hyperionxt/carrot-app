@@ -9,7 +9,9 @@ This app serves to offer recipes based on ingredients that users have available.
 ## Features
 
 JWT.  
-Users profiles.  
+Users profiles.
+Users can save or delete recipes from their favorites list.  
+User roles.  
 Trend recipes.  
 Pagination.  
 Validations.  
