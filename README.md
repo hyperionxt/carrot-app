@@ -9,17 +9,17 @@ This app serves to offer recipes based on ingredients that users have available.
 
 ## Features
 
-JWT.
-Users profiles.
-Trend recipes.
-Pagination.
-Data and env vars validations.
+JWT.  
+Users profiles.  
+Trend recipes.  
+Pagination.  
+Data and env vars validations.  
 
 ## Features(in comming)
 
-Redis as cache db
-Cloud storage for images
-Transactional emails to recover passwords
+Redis as cache db.  
+Cloud storage for images.  
+Transactional emails to recover passwords.  
 
 ## Installation
 
