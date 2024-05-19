@@ -4,23 +4,25 @@
 
 ## Description
 
-This API REST serves to offer recipes based on ingredients that users have available. You can not search using specific names of recipes, the only way to search for recipes is by ingredients.
+This API REST serves to offer recipes based on ingredients that users have available. You can not search using specific names of recipes, the only way to search for recipes is by ingredients. Why build this? To offer a fast way for looking to something to cook
 
 ## Features
 
 JWT.  
 Users profiles.  
 Users can save or delete recipes from their favorites list.  
+Order recipes by countries.  
 User roles.  
 Trend recipes.  
 Pagination.  
 Validations.  
 Swagger documentation.  
 E2e tests.  
+Automatic backup database generator.
 
 ## Features(in comming)
 
-Redis as cache db.  
+Redis as cache database.  
 Cloud storage for images.  
 Transactional emails to recover passwords.  
 
