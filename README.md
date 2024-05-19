@@ -7,6 +7,20 @@
 
 This app serves to offer recipes based on ingredients that users have available. You can not search using specific names of recipes, the only way to search for recipes is by ingredients.
 
+## Features
+
+JWT.
+Users profiles.
+Trend recipes.
+Pagination.
+Data and env vars validations.
+
+## Features(in comming)
+
+Redis as cache db
+Cloud storage for images
+Transactional emails to recover passwords
+
 ## Installation
 
 ```bash
