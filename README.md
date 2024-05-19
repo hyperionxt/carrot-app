@@ -13,7 +13,7 @@ JWT.
 Users profiles.  
 Trend recipes.  
 Pagination.  
-Data and env vars validations.  
+Validations.  
 Swagger documentation.  
 Tests e2e.  
 
