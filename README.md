@@ -15,7 +15,7 @@ Trend recipes.
 Pagination.  
 Validations.  
 Swagger documentation.  
-Tests e2e.  
+E2e tests.  
 
 ## Features(in comming)
 
