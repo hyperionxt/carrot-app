@@ -1,12 +1,13 @@
 import {
-    CanActivate,
-    ExecutionContext,
-    Injectable,
-    UnauthorizedException,
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { JWT_SECRET_KEY } from 'src/config/config';
+
+import { JWT_SECRET_KEY } from '../../config/vars.config';
 import { Role } from '../../users/entities/user.entity';
 
 @Injectable()
@@ -28,7 +29,8 @@ export class AdminGuard implements CanActivate {
         request['user'] = payload;
         return true;
       }
-    } catch {
+    } catch (error) {
+      if (error instanceof UnauthorizedException) throw error;
       throw new UnauthorizedException('Invalid token');
     }
   }

@@ -12,7 +12,7 @@ export class CreateRecipeDto {
   description: string;
   @IsArray()
   @IsNotEmpty()
-  ingredients: string;
+  ingredients: string[];
   @IsString()
   @IsNotEmpty()
   instructions: string;

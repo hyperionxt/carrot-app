@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcrypt';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/entities/user.entity';
-import { UsersService } from 'src/users/users.service';
+
 import { Repository } from 'typeorm';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
 import { LoginUserDto } from './dto/sign-in.dto';
 
 @Injectable()
@@ -57,8 +57,8 @@ export class AuthService {
         throw error;
       } else {
         throw new HttpException(
-          'Service Unavailable',
-          HttpStatus.SERVICE_UNAVAILABLE,
+          'BAD REQUEST',
+          HttpStatus.BAD_REQUEST,
         );
       }
     }

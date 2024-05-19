@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 
 export class UpdateRecipeDto {
   @IsString()
@@ -10,9 +10,9 @@ export class UpdateRecipeDto {
   @IsString()
   @IsOptional()
   description?: string;
-  @IsString()
+  @IsArray()
   @IsOptional()
-  ingredients?: string;
+  ingredients?: string[];
   @IsString()
   @IsOptional()
   instructions?: string;

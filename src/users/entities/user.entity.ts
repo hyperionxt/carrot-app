@@ -1,4 +1,3 @@
-import { Recipe } from 'src/recipes/entities/recipe.entity';
 import {
   Column,
   CreateDateColumn,
@@ -9,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Recipe } from '../../recipes/entities/recipe.entity';
 
 export enum Role {
   ADMIN = 'ADMIN',
@@ -34,7 +34,6 @@ export class User {
 
   @ManyToMany(() => Recipe)
   @JoinTable()
-
   favorites: Recipe[];
   @Column()
   role: Role;

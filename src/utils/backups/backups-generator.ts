@@ -1,13 +1,6 @@
 import { exec } from 'child_process';
-import {
-  BACKUP_PATH,
-  DB_HOST,
-  DB_NAME,
-  DB_PASSWORD,
-  DB_PORT,
-  DB_USERNAME,
-  DUMP_PATH,
-} from 'src/config/config';
+import { BACKUP_PATH, DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USERNAME, DUMP_PATH } from '../../config/vars.config';
+
 
 export const backupDatabaseFormat = () => {
   const format = 'backup';

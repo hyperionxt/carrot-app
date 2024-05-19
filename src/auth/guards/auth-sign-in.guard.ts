@@ -12,7 +12,7 @@ export class SignInGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 
-    if (token === undefined || !token) {
+    if (token === undefined || !token || token.length === 0 || !token.trim()) {
       return true;
     } else {
       throw new UnauthorizedException(

@@ -1,32 +1,37 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare, hash } from 'bcrypt';
-import { PaginationQueryDto } from 'src/pagination/pagination-query.dto';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/entities/user.entity';
-import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
+import { PaginationQueryDto } from '../pagination/pagination-query.dto';
+import { CreateRecipeDto } from '../recipes/dto/create-recipe.dto';
+import { UpdateRecipeDto } from '../recipes/dto/update-recipe.dto';
+import { Recipe } from '../recipes/entities/recipe.entity';
+import { RecipesService } from '../recipes/recipes.service';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
 import { AdminUpdateUserDto } from './dto/admin-update-user.dto';
 
 @Injectable()
 export class AdminService {
   constructor(
     private userService: UsersService,
+    private recipeService: RecipesService,
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
-  create(user: CreateUserDto): Promise<User> {
+  createUser(user: CreateUserDto): Promise<User> {
     return this.userService.createUser(user);
   }
 
-  findAll(pagination: PaginationQueryDto): Promise<User[]> {
+  findAllUsers(pagination: PaginationQueryDto): Promise<User[]> {
     return this.userService.findAll(pagination);
   }
 
-  findOne(id: number): Promise<User> {
+  findOneUser(id: number): Promise<User> {
     return this.userService.findOne(id);
   }
 
-  async update(id: number, user: AdminUpdateUserDto): Promise<User> {
+  async updateUser(id: number, user: AdminUpdateUserDto): Promise<User> {
     try {
       const userFound = await this.userRepository.findOne({
         where: { id: id },
@@ -72,7 +77,23 @@ export class AdminService {
     }
   }
 
-  remove(id: number): Promise<HttpException> {
-    return this.userService.remove(id);
+  removeUser(id: number): Promise<HttpException> {
+    return this.userService.removeByAdmin(id);
+  }
+
+  createRecipe(recipe: CreateRecipeDto): Promise<Recipe> {
+    return this.recipeService.createRecipe(recipe);
+  }
+
+  findAllRecipes(pagination: PaginationQueryDto): Promise<Recipe[]> {
+    return this.recipeService.findAllRecipes(pagination);
+  }
+
+  updateRecipe(id: number, recipe: UpdateRecipeDto):Promise<Recipe> {
+    return this.recipeService.updateRecipe(id, recipe);
+  }
+
+  removeRecipe(id: number): Promise<HttpException> {
+    return this.recipeService.removeRecipe(id);
   }
 }

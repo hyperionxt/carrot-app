@@ -16,8 +16,8 @@ export class Recipe {
   country: string;
   @Column()
   description: string;
-  @Column({ array: true })
-  ingredients: string;
+  @Column('text',{ array: true })
+  ingredients: string[];
   @Column()
   instructions: string;
   @CreateDateColumn()

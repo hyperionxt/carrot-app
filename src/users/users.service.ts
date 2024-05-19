@@ -1,12 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare, hash } from 'bcrypt';
-import { PaginationQueryDto } from 'src/pagination/pagination-query.dto';
-import { Recipe } from 'src/recipes/entities/recipe.entity';
-import { RecipesService } from 'src/recipes/recipes.service';
-
-import { Profile } from 'src/types/profile.type';
 import { Repository } from 'typeorm';
+import { PaginationQueryDto } from '../pagination/pagination-query.dto';
+import { Recipe } from '../recipes/entities/recipe.entity';
+import { RecipesService } from '../recipes/recipes.service';
+import { Profile } from '../types/profile.type';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Role, User } from './entities/user.entity';
@@ -22,8 +21,19 @@ export class UsersService {
       const userFound = await this.userRepository.findOne({
         where: { email: user.email },
       });
+
       if (userFound) {
         throw new HttpException('Email already used', HttpStatus.CONFLICT);
+      }
+
+      if (!user.password) {
+        throw new HttpException('Password is required', HttpStatus.BAD_REQUEST);
+      }
+      if (!user.email) {
+        throw new HttpException('Email is required', HttpStatus.BAD_REQUEST);
+      }
+      if (!user.name) {
+        throw new HttpException('Name is required', HttpStatus.BAD_REQUEST);
       }
 
       const passwordHash = await hash(user.password, 10);
@@ -36,8 +46,8 @@ export class UsersService {
         throw error;
       } else {
         throw new HttpException(
-          'Service Unavailable',
-          HttpStatus.SERVICE_UNAVAILABLE,
+          'Internal Server Error',
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
     }
@@ -126,7 +136,22 @@ export class UsersService {
     }
   }
 
-  async remove(id: number): Promise<HttpException> {
+  async removeByUser(id: number): Promise<HttpException> {
+    try {
+      const userFound = await this.userRepository.delete({ id });
+      if (userFound.affected === 0)
+        throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+      return new HttpException('User deleted successfully', HttpStatus.OK);
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Service Unavailable',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
+    }
+  }
+
+  async removeByAdmin(id: number): Promise<HttpException> {
     try {
       const userFound = await this.userRepository.delete({ id });
       if (userFound.affected === 0)
@@ -150,7 +175,6 @@ export class UsersService {
       if (!userFound)
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       const profile = {
-        id: userFound.id,
         name: userFound.name,
         lastname: userFound.lastname,
         favorites: userFound.favorites,
@@ -188,7 +212,8 @@ export class UsersService {
     try {
       const userFound = await this.findOne(userId);
 
-      const recipeFound = await this.recipeService.findOne(recipeId);
+      const recipeFound = await this.recipeService.findOneRecipe(recipeId);
+      recipeFound.favorites = recipeFound.favorites + 1;
 
       userFound.favorites.push(recipeFound);
       return this.userRepository.save(userFound);
@@ -203,7 +228,9 @@ export class UsersService {
       const userFound = await this.findOne(userId);
 
       const userFavorites = await this.getFavorites(userId);
-      console.log(typeof recipeId);
+
+      const recipeFound = await this.recipeService.findOneRecipe(recipeId);
+      recipeFound.favorites = recipeFound.favorites - 1;
 
       const updatedRecipes = userFavorites.filter(
         (recipe) => recipe.id !== recipeId,

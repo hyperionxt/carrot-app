@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaginationQueryDto } from 'src/pagination/pagination-query.dto';
-import { Repository, UpdateResult } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
+import { PaginationQueryDto } from '../pagination/pagination-query.dto';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe } from './entities/recipe.entity';
@@ -11,7 +11,7 @@ export class RecipesService {
   constructor(
     @InjectRepository(Recipe) private recipeRepository: Repository<Recipe>,
   ) {}
-  async create(recipe: CreateRecipeDto): Promise<Recipe> {
+  async createRecipe(recipe: CreateRecipeDto): Promise<Recipe> {
     try {
       const recipeFound = await this.recipeRepository.findOne({
         where: { title: recipe.title },
@@ -31,7 +31,10 @@ export class RecipesService {
     }
   }
 
-  async findAll({ limit, offset }: PaginationQueryDto): Promise<Recipe[]> {
+  async findAllRecipes({
+    limit,
+    offset,
+  }: PaginationQueryDto): Promise<Recipe[]> {
     try {
       const userFavorites = await this.recipeRepository.find({
         skip: offset,
@@ -44,6 +47,7 @@ export class RecipesService {
         );
       return userFavorites;
     } catch (error) {
+      if (error instanceof HttpException) throw error;
       throw new HttpException(
         'Internal Server Error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -51,13 +55,14 @@ export class RecipesService {
     }
   }
 
-  async findOne(id: number): Promise<Recipe> {
+  async findOneRecipe(id: number): Promise<Recipe> {
     try {
       const recipeFound = await this.recipeRepository.findOne({
         where: { id: id },
       });
       if (!recipeFound)
         throw new HttpException('Recipe not found', HttpStatus.NOT_FOUND);
+      recipeFound.clicks = recipeFound.clicks + 1;
       return recipeFound;
     } catch (error) {
       if (error instanceof HttpException) throw error;
@@ -97,14 +102,19 @@ export class RecipesService {
     }
   }
 
-  async update(id: number, recipe: UpdateRecipeDto): Promise<UpdateResult> {
+  async updateRecipe(id: number, recipe: UpdateRecipeDto): Promise<Recipe> {
     try {
       const recipeFound = await this.recipeRepository.findOne({
         where: { id: id },
       });
       if (!recipeFound)
         throw new HttpException('Recipe not found', HttpStatus.NOT_FOUND);
-      return this.recipeRepository.update(id, recipe);
+      if (recipe.ingredients !== undefined) {
+        
+        recipeFound.ingredients = recipe.ingredients;
+      }
+      const updateRecipe = Object.assign(recipeFound, recipe);
+      return this.recipeRepository.save(updateRecipe);
     } catch (error) {
       if (error instanceof HttpException) throw error;
       throw new HttpException(
@@ -114,12 +124,29 @@ export class RecipesService {
     }
   }
 
-  async remove(id: number): Promise<HttpException> {
+  async removeRecipe(id: number): Promise<HttpException> {
     try {
       const recipeFound = await this.recipeRepository.delete({ id });
       if (recipeFound.affected === 0)
         throw new HttpException('Recipe not found', HttpStatus.NOT_FOUND);
       return new HttpException('Recipe deleted', HttpStatus.OK);
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async topThreeRecipes(): Promise<Recipe[]> {
+    try {
+      const recipesFound = await this.recipeRepository.find({
+        where: { favorites: MoreThan(100), clicks: MoreThan(50) },
+        take: 3,
+      });
+
+      return recipesFound;
     } catch (error) {
       if (error instanceof HttpException) throw error;
       throw new HttpException(

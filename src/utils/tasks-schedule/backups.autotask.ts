@@ -9,6 +9,6 @@ export class DatabaseBackupAutoTask {
   @Cron('59 23 * * *')
   handleCron() {
     backupDatabaseFormat();
-    console.log('----Database backup in progress----');
+    console.log('----Scheduled task: creation of database backup----');
   }
 }

@@ -7,7 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Role } from 'src/users/entities/user.entity';
+import { Role } from '../../users/entities/user.entity';
 
 export class AdminUpdateUserDto {
   @MinLength(2)

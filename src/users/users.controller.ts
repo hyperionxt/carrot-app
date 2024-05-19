@@ -13,9 +13,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { Recipe } from 'src/recipes/entities/recipe.entity';
-import { UserPayload } from 'src/types/user-payload.type';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { Recipe } from '../recipes/entities/recipe.entity';
+import { UserPayload } from '../types/user-payload.type';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -43,9 +43,9 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Delete('delete')
   remove(@Request() req: UserPayload) {
-    return this.usersService.remove(req.user.id);
+    return this.usersService.removeByUser(req.user.id);
   }
-  @Get('/findByIngredients')
+  @Get('recipes/findByIngredients')
   findByIngredients(
     @Query('ingredients', ParseArrayPipe) ingredients: string[],
     @Query('orderBy') orderBy: 'default' | 'country' = 'default',
@@ -62,7 +62,7 @@ export class UsersController {
 
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @Post('/add/:id')
+  @Post('recipe/add/:id')
   addToFavorites(
     @Request() req: UserPayload,
     @Param('id', ParseIntPipe) id: number,
@@ -71,7 +71,7 @@ export class UsersController {
   }
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @Patch('/remove/:id')
+  @Patch('recipe/remove/:id')
   removeFromfavorites(
     @Request() req: UserPayload,
     @Param('id', ParseIntPipe) id: number,

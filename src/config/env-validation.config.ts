@@ -14,6 +14,7 @@ const envSchema = z.object({
   BACKUP_PATH: z.string(),
 });
 
+
 envSchema.parse(process.env);
 
 declare global {
