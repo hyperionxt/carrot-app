@@ -28,6 +28,19 @@
 ```bash
 $ pnpm install
 ```
+``` ENV VARS
+APP_PORT=XXXX
+DB_TYPE= postgres || mariadb ||myslq || sql3, etc
+DB_HOST= XXXXXXX
+DB_PORT= XXXX
+DB_USERNAME= XXXXXXXXXX
+DB_PASSWORD= XXXXXXXXXX
+DB_NAME= XXXXXX
+DB_NAME_TEST= db for testing
+JWT_SECRET_KEY= XXXXXXXXXXXXXXXXXXXXX
+DUMP_PATH=C: path of backup.bat
+BACKUP_PATH= path to save the backups
+```
 
 ## Running the app
 
