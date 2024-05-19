@@ -13,7 +13,9 @@ JWT.
 Users profiles.  
 Trend recipes.  
 Pagination.  
-Data and env vars validations.  
+Data and env vars validations.
+Swagger documentation.  
+Tests e2e.  
 
 ## Features(in comming)
 
