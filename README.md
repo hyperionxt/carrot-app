@@ -38,7 +38,7 @@ DB_PASSWORD= XXXXXXXXXX
 DB_NAME= XXXXXX
 DB_NAME_TEST= db for testing
 JWT_SECRET_KEY= XXXXXXXXXXXXXXXXXXXXX
-DUMP_PATH=C: path of backup.bat
+DUMP_PATH= path of backup.bat
 BACKUP_PATH= path to save the backups
 ```
 
