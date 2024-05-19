@@ -48,5 +48,5 @@ $ pnpm run test:e2e
 ```
 
 ## Swagger Documentation
-url/api/doc
+{your_url_here}/api/doc
 
