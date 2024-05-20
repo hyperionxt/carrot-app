@@ -1,5 +1,5 @@
 <div align="center">
-  <span>Made with the framework with the cat logo. I Mean NestJS.</span>
+  <span>Made with the framework with a cat as icon. I Mean NestJS.</span>
   <br>
   <img src="https://nestjs.com/img/logo-small.svg" width="50" alt="Nest Logo" />
 </div>
