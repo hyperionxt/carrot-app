@@ -1,29 +1,6 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Centered NestJS Logo</title>
-  <style>
-    .centered-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .centered-content img {
-      width: 100px;
-    }
-  </style>
-</head>
-<body>
-  <div class="centered-content">
-    <a target="blank" href="https://nestjs.com">
-      <img src="https://nestjs.com/img/logo-small.svg" alt="Nest Logo" />
-      <div>Made with the framework with a logo cat, I mean, NestJS</div>
-    </a>
-  </div>
-</body>
-</html>
+<p align="center">
+  <a target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo"" />Made with the framework with a logo cat, I mean, NestJS</a>
+</p>
 
 ## Description
 
