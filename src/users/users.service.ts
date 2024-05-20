@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare, hash } from 'bcrypt';
 import { Repository } from 'typeorm';
@@ -260,5 +260,43 @@ export class UsersService {
     orderBy: 'default' | 'country' = 'default',
   ): Promise<Recipe[]> {
     return this.recipeService.findByIngredients(ingredients, orderBy);
+  }
+
+  async createAdminUser() {
+    try {
+      const adminFound = await this.userRepository.findOne({
+        where: {
+          role: Role.ADMIN,
+        },
+      });
+
+      if (adminFound) {
+        Logger.log('Admin user already exists.');
+        return;
+      }
+
+      const name = 'admin';
+      const email = 'admin@potato.com';
+      const password = 'passwordBeLike#43';
+      const role = Role.ADMIN;
+
+      const newAdmin = this.userRepository.create({
+        name,
+        email,
+        password: await hash(password, 10),
+        role,
+      });
+
+      Logger.log(
+        `Admin profile created successfully!\n
+        Email: ${email}\n
+        Password: ${password}\n
+        You can sign in with these credentials`,
+      );
+
+      await this.userRepository.save(newAdmin);
+    } catch (e) {
+      Logger.error('Error creating admin user: ', e);
+    }
   }
 }

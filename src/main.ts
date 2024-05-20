@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import './config/env-validation.config';
 import { APP_PORT } from './config/vars.config';
+import { UsersService } from './users/users.service';
 
 async function bootstrap() {
   try {
@@ -14,6 +15,8 @@ async function bootstrap() {
         whitelist: true,
       }),
     );
+    const adminUserGenerator = app.get(UsersService);
+    await adminUserGenerator.createAdminUser();
     app.use(helmet());
     const config = new DocumentBuilder()
       .addBearerAuth()
