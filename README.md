@@ -66,8 +66,10 @@ $ pnpm run test:e2e
 ## Swagger Documentation
 {your_url_here}/api/doc
 
+_________________________________________________________________________
+
 <div align="center">
-  <span>Made with the framework with a cat as icon. I Mean NestJS.</span>
+  <span>Made with the framework with a cat as icon. I mean NestJS.</span>
   <br>
   <img src="https://nestjs.com/img/logo-small.svg" width="50" alt="Nest Logo" />
 </div>
