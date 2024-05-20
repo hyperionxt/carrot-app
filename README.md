@@ -1,6 +1,7 @@
-<div align="center" style="display: flex; align-items: center; justify-content: center;">
-  <img src="https://nestjs.com/img/logo-small.svg" width="50" alt="Nest Logo" style="margin-right: 10px;" />
-  <span>Made with the framework with a logo cat, I mean NestJS</span>
+<div align="center">
+  <span>Made with the framework with a logo cat, I mean, NestJS</span>
+  <br>
+  <img src="https://nestjs.com/img/logo-small.svg" width="50" alt="Nest Logo" />
 </div>
 
 
