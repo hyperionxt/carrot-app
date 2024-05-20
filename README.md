@@ -1,5 +1,5 @@
 <p align="center">
-  <a target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo"" />Made with Nestjs</a>
+  <a target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo"" />Made with the framework with a logo cat, I mean, NestJS</a>
 </p>
 
 ## Description
