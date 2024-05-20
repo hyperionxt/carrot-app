@@ -1,8 +1,10 @@
- <a href="https://nestjs.com" target="_blank" style="display: flex; align-items: center; justify-content: center; text-decoration: none; color: inherit;">
+<div align="center">
+  <a href="https://nestjs.com" target="_blank" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
     <img src="https://nestjs.com/img/logo-small.svg" width="50" alt="Nest Logo" style="margin-right: 10px;" />
-    <span>Made with the framework with a logo cat, I mean, NestJS</span>
+    <span style="line-height: 1;">Made with the framework with a logo cat, I mean, NestJS</span>
   </a>
 </div>
+
   
 ## Description
 
