@@ -1,10 +1,8 @@
-<p align="center">
-  <a href="https://nestjs.com" target="blank">
-    <img src="https://nestjs.com/img/logo-small.svg" width="100" alt="Nest Logo" />
-    <br />
-    Made with the framework with a logo cat, I mean, NestJS
+ <a href="https://nestjs.com" target="_blank" style="display: flex; align-items: center; justify-content: center; text-decoration: none; color: inherit;">
+    <img src="https://nestjs.com/img/logo-small.svg" width="50" alt="Nest Logo" style="margin-right: 10px;" />
+    <span>Made with the framework with a logo cat, I mean, NestJS</span>
   </a>
-</p>
+</div>
 ## Description
 
 This API REST serves to offer recipes based on ingredients as search parameters. You can not search using specific names of recipes, the only way to search for recipes is by ingredients. Why build this? Offer a quick way to find something to cook for users in times when we have less free time and quick solutions to simple problems are needed... and because I like to cook :)
