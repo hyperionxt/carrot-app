@@ -69,7 +69,7 @@ $ pnpm run test:e2e
 _________________________________________________________________________
 
 <div align="center">
-  <span>Made with the framework with a cat as icon. I mean NestJS.</span>
+  <span>Made with the framework with the icon cat. I mean NestJS.</span>
   <br>
   <img src="https://nestjs.com/img/logo-small.svg" width="50" alt="Nest Logo" />
 </div>
