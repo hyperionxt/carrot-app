@@ -1,15 +1,29 @@
 import { Role } from '../../src/users/entities/user.entity';
 
-export const initialUserProfile = {
-  name: 'user1',
-  lastname: 'lastname1',
-  email: 'user1@gmail.com',
-  password: 'POTATOpass#1',
-  role: Role.REGULAR,
-};
+export const initialUsersProfile = [
+  {
+    name: 'user1',
+    lastname: 'lastname1',
+    email: 'user1@gmail.com',
+    password: 'POTATOpass#1',
+    role: Role.REGULAR,
+  },
+  {
+    name: 'user2',
+    lastname: 'lastname1',
+    email: 'user2@gmail.com',
+    password: 'POTATOpass#1',
+    role: Role.REGULAR,
+  },
+];
 
 export const userLogin = {
   email: 'user1@gmail.com',
+  password: 'POTATOpass#1',
+};
+
+export const userLoginTwo = {
+  email: 'user2@gmail.com',
   password: 'POTATOpass#1',
 };
 

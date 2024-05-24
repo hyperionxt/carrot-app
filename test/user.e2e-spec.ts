@@ -1,17 +1,21 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { hash } from 'bcrypt';
+import { redisStore } from 'cache-manager-redis-yet';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
 import { AppModule } from '../src/app.module';
+import { REDIS_HOST, REDIS_LOCAL_PORT } from '../src/config/vars.config';
 import { Recipe } from '../src/recipes/entities/recipe.entity';
 import { User } from '../src/users/entities/user.entity';
 import { TestLogger } from './helpers/auth.helpers';
 import {
   initialRecipesFav,
-  initialUserProfile,
+  initialUsersProfile,
   userLogin,
+  userLoginTwo,
 } from './helpers/user.helpers';
 
 let app: INestApplication;
@@ -19,11 +23,25 @@ let jwt: JwtService;
 
 beforeAll(async () => {
   const moduleFixture = await Test.createTestingModule({
-    imports: [AppModule],
+    imports: [
+      AppModule,
+      CacheModule.registerAsync({
+        isGlobal: true,
+        useFactory: async () => ({
+          store: await redisStore({
+            socket: {
+              host: REDIS_HOST,
+              port: REDIS_LOCAL_PORT,
+            },
+          }),
+        }),
+      }),
+    ],
     providers: [JwtService],
   }).compile();
 
   jwt = moduleFixture.get<JwtService>(JwtService);
+
   app = moduleFixture.createNestApplication();
   app.useLogger(new TestLogger());
   await app.init();
@@ -35,17 +53,24 @@ beforeEach(async () => {
   await data.query('ALTER SEQUENCE users_id_seq RESTART WITH 1');
   await data.createQueryBuilder().delete().from(Recipe).execute();
   await data.query('ALTER SEQUENCE recipes_id_seq RESTART WITH 1');
-  async function hassUserPass(initialUsersProfile) {
-    const passwordHash = await hash(initialUsersProfile.password, 10);
-    return { ...initialUsersProfile, password: passwordHash };
-  }
-  const hashedUser = await hassUserPass(initialUserProfile);
+  // async function hassUserPass(initialUsersProfile) {
+  //   const passwordHash = await hash(initialUsersProfile.password, 10);
+  //   return { ...initialUsersProfile, password: passwordHash };
+  // }
+  // const hashedUser = await hassUserPass(initialUsersProfile);
+
+  const hashedUsers = await Promise.all(
+    initialUsersProfile.map(async (user) => {
+      const passwordHash = await hash(user.password, 10);
+      return { ...user, password: passwordHash };
+    }),
+  );
 
   await data
     .createQueryBuilder()
     .insert()
     .into(User)
-    .values(hashedUser)
+    .values(hashedUsers)
     .execute();
 
   await data
@@ -172,12 +197,12 @@ describe('POST /users/recipe/add/:id', () => {
       .expect(201);
 
     const userFound = await request(app.getHttpServer())
-      .get('/users/profile')
+      .get('/users/favorites')
       .set('Authorization', `Bearer ${response.body.token}`)
       .expect(200);
 
-    expect(userFound.body.favorites[0].id).toBe(recipesFound.body[0].id);
-    expect(userFound.body.favorites[0].title).toBe(recipesFound.body[0].title);
+    expect(userFound.body[0].id).toBe(recipesFound.body[0].id);
+    expect(userFound.body[0].title).toBe(recipesFound.body[0].title);
   });
 });
 
@@ -185,31 +210,33 @@ describe('PATCH /users/recipe/add/:id', () => {
   it('should remove a recipe from favorite list of users', async () => {
     const response = await request(app.getHttpServer())
       .post('/auth/signin')
-      .send(userLogin)
+      .send(userLoginTwo)
       .expect(201);
+
     const ingredients = 'ingr1,ingr4';
     const recipesFound = await request(app.getHttpServer())
       .get('/users/recipes/findByIngredients')
       .query({ ingredients: ingredients })
       .expect(200);
-    await request(app.getHttpServer())
+
+    const potato = await request(app.getHttpServer())
       .post(`/users/recipe/add/${recipesFound.body[0].id}`)
       .set('Authorization', `Bearer ${response.body.token}`)
       .expect(201);
 
-    await request(app.getHttpServer())
+    const removeRe = await request(app.getHttpServer())
       .patch(`/users/recipe/remove/${recipesFound.body[0].id}`)
       .set('Authorization', `Bearer ${response.body.token}`)
       .expect(200);
 
     const userFound = await request(app.getHttpServer())
-      .get('/users/profile')
+      .get('/users/favorites')
       .set('Authorization', `Bearer ${response.body.token}`)
       .expect(200);
-    expect(userFound.body.favorites).toHaveLength(0);
+    expect(userFound.body).toHaveLength(0);
   });
 });
 
 afterAll(async () => {
-  await Promise.all([app.close()]);
+  await app.close();
 });

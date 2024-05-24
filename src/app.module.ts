@@ -1,6 +1,9 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { redisStore } from 'cache-manager-redis-yet';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import {
@@ -12,12 +15,14 @@ import {
   DB_TYPE,
   DB_USERNAME,
   ENV,
+  REDIS_HOST,
+  REDIS_LOCAL_PORT
 } from './config/vars.config';
 import { RecipesModule } from './recipes/recipes.module';
 import { UsersModule } from './users/users.module';
 import { DatabaseBackupAutoTask } from './utils/tasks-schedule/backups.autotask';
 
-const dbName: string = ENV === 'test' ? DB_NAME_TEST : DB_NAME;
+const dbName = ENV === 'test' ? DB_NAME_TEST : DB_NAME;
 
 @Module({
   imports: [
@@ -32,6 +37,18 @@ const dbName: string = ENV === 'test' ? DB_NAME_TEST : DB_NAME;
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async () => ({
+        store: await redisStore({
+          socket: {
+            host: REDIS_HOST,
+            port: REDIS_LOCAL_PORT,
+          },
+        }),
+      }),
+    }),
+    EventEmitterModule.forRoot(),
     UsersModule,
     AuthModule,
     AdminModule,

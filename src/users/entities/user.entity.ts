@@ -32,7 +32,7 @@ export class User {
   @Column()
   password: string;
 
-  @ManyToMany(() => Recipe)
+  @ManyToMany(() => Recipe, { cascade: true })
   @JoinTable()
   favorites: Recipe[];
   @Column()

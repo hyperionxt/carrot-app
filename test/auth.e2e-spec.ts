@@ -1,10 +1,13 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { hash } from 'bcrypt';
+import { redisStore } from 'cache-manager-redis-yet';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
 import { AppModule } from '../src/app.module';
+import { REDIS_HOST, REDIS_LOCAL_PORT } from '../src/config/vars.config';
 import { User } from '../src/users/entities/user.entity';
 import {
   TestLogger,
@@ -23,11 +26,25 @@ let jwt: JwtService;
 
 beforeAll(async () => {
   const moduleFixture = await Test.createTestingModule({
-    imports: [AppModule],
+    imports: [
+      AppModule,
+      CacheModule.registerAsync({
+        isGlobal: true,
+        useFactory: async () => ({
+          store: await redisStore({
+            socket: {
+              host: REDIS_HOST,
+              port: REDIS_LOCAL_PORT
+            },
+          }),
+        }),
+      }),
+    ],
     providers: [JwtService],
   }).compile();
 
   jwt = moduleFixture.get<JwtService>(JwtService);
+
   app = moduleFixture.createNestApplication();
   app.useLogger(new TestLogger());
   await app.init();
@@ -110,5 +127,5 @@ describe('POST /auth/signin', () => {
 });
 
 afterAll(async () => {
-  await Promise.all([app.close()]);
+  await app.close();
 });

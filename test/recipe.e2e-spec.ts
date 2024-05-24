@@ -5,6 +5,9 @@ import { DataSource } from 'typeorm';
 import { AppModule } from '../src/app.module';
 import { Recipe } from '../src/recipes/entities/recipe.entity';
 
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
+import { REDIS_HOST, REDIS_LOCAL_PORT } from '../src/config/vars.config';
 import { TestLogger } from './helpers/auth.helpers';
 import { initialRecipesTop } from './helpers/recipe.helpers';
 
@@ -12,7 +15,20 @@ let app: INestApplication;
 
 beforeAll(async () => {
   const moduleFixture = await Test.createTestingModule({
-    imports: [AppModule],
+    imports: [
+      AppModule,
+      CacheModule.registerAsync({
+        isGlobal: true,
+        useFactory: async () => ({
+          store: await redisStore({
+            socket: {
+              host: REDIS_HOST,
+              port: REDIS_LOCAL_PORT
+            },
+          }),
+        }),
+      }),
+    ],
   }).compile();
 
   app = moduleFixture.createNestApplication();
@@ -43,5 +59,5 @@ describe('GET /recipes/topThree', () => {
 });
 
 afterAll(async () => {
-  await Promise.all([app.close()]);
+  await app.close();
 });

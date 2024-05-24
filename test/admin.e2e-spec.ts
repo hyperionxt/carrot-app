@@ -1,32 +1,56 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { hash } from 'bcrypt';
+import { redisStore } from 'cache-manager-redis-yet';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
 import { AppModule } from '../src/app.module';
+import {
+  REDIS_HOST,
+  REDIS_LOCAL_PORT
+} from '../src/config/vars.config';
 import { Recipe } from '../src/recipes/entities/recipe.entity';
 import { User } from '../src/users/entities/user.entity';
-import { initialAdminUsers, initialRecipes, newRecipe } from './helpers/admin.helpers';
+import {
+  initialAdminUsers,
+  initialRecipes,
+  newRecipe,
+} from './helpers/admin.helpers';
 import { TestLogger, newUser } from './helpers/auth.helpers';
-
 
 let app: INestApplication;
 let jwt: JwtService;
 
 beforeAll(async () => {
   const moduleFixture = await Test.createTestingModule({
-    imports: [AppModule],
+    imports: [
+      AppModule,
+      CacheModule.registerAsync({
+        isGlobal: true,
+        useFactory: async () => ({
+          store: await redisStore({
+            socket: {
+              host: REDIS_HOST,
+              port: REDIS_LOCAL_PORT,
+            },
+          }),
+        }),
+      }),
+    ],
     providers: [JwtService],
   }).compile();
 
   jwt = moduleFixture.get<JwtService>(JwtService);
+
   app = moduleFixture.createNestApplication();
   app.useLogger(new TestLogger());
   await app.init();
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
   const data = app.get(DataSource);
   await data.createQueryBuilder().delete().from(User).execute();
   await data.query('ALTER SEQUENCE users_id_seq RESTART WITH 1');
@@ -84,6 +108,7 @@ describe('GET /admin/users/', () => {
       .get('/admin/users')
       .set('Authorization', `Bearer ${token}`)
       .expect(200);
+
     expect(response.body).toHaveLength(initialAdminUsers.length);
   });
   it('nonadmin users can not access to this route', async () => {
@@ -350,6 +375,7 @@ describe('DELETE /admin/deleteRecipe/:id', () => {
       .expect(401);
   });
 });
+
 afterAll(async () => {
-  await Promise.all([app.close()]);
+  await app.close();
 });

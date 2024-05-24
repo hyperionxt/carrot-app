@@ -14,6 +14,7 @@ export const DB_USERNAME = process.env.DB_USERNAME;
 export const DB_PASSWORD = process.env.DB_PASSWORD;
 export const DB_NAME = process.env.DB_NAME;
 export const DB_NAME_TEST = process.env.DB_NAME_TEST;
+
 /*JWT*/
 export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -23,3 +24,10 @@ export const ENV = NODE_ENV;
 //BACKUPS
 export const DUMP_PATH = process.env.DUMP_PATH;
 export const BACKUP_PATH = process.env.BACKUP_PATH;
+
+//REDIS SETUP
+export const REDIS_HOST = process.env.REDIS_HOST;
+export const REDIS_LOCAL_PORT = parseInt(process.env.REDIS_LOCAL_PORT);
+export const REDIS_CONTAINER_NAME = process.env.REDIS_CONTAINER_NAME;
+export const REDIS_TEST_CONTAINER_NAME = process.env.REDIS_TEST_CONTAINER_NAME;
+export const REDIS_TEST_LOCAL_PORT = parseInt(process.env.REDIS_TEST_LOCAL_PORT);
