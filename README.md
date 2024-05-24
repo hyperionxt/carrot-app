@@ -16,10 +16,10 @@ Validations.
 Swagger documentation.  
 E2e tests.  
 Automatic backup database generator.
+Event-based cache invalidation with Redis
 
 ## Features(in comming)
 
-Redis as cache database.  
 Cloud storage for images.  
 Transactional emails to recover passwords.  
 
@@ -27,6 +27,7 @@ Transactional emails to recover passwords.
 
 ```bash
 $ pnpm install
+$ docker-compose up
 ```
 ```.env
 APP_PORT=XXXX
@@ -40,6 +41,9 @@ DB_NAME_TEST= db for testing
 JWT_SECRET_KEY= XXXXXXXXXXXXXXXXXXXXX
 DUMP_PATH= path of backup.bat
 BACKUP_PATH= path to save the backups
+REDIS_CONTAINER_NAME=XXXXXXX
+REDIS_LOCAL_PORT=XXXX
+REDIS_HOST=XXXXXXXX
 ```
 
 ## Running the app
