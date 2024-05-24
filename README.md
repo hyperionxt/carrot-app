@@ -15,7 +15,7 @@ Pagination.
 Validations.  
 Swagger documentation.  
 E2e tests.  
-Automatic backup database generator.
+Automatic backup database generator.  
 Event-based cache invalidation with Redis
 
 ## Features(in comming)
