@@ -16,7 +16,7 @@ Validations.
 Swagger documentation.  
 E2e tests.  
 Automatic backup database generator.  
-Event-based cache invalidation with Redis.
+Event-based cache invalidation with Redis.  
 Cloud storage for images.  
 Transactional emails to recover passwords.  
 
