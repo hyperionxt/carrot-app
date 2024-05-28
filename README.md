@@ -5,6 +5,8 @@ This API REST serves to offer recipes based on ingredients as search parameters.
 
 ## Features
 
+SQL database.  
+TypeORM.  
 JWT.  
 Users profiles.  
 Users can save or delete recipes from their favorites list.  
