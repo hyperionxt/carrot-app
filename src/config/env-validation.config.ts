@@ -12,13 +12,20 @@ const envSchema = z.object({
   JWT_SECRET_KEY: z.string(),
   DUMP_PATH: z.string(),
   BACKUP_PATH: z.string(),
-});
+  REDIS_HOST: z.string(),
+  REDIS_LOCAL_PORT: z.string(),
+  REDIS_CONTAINER_NAME: z.string(),
+  MAIL_HOST: z.string(),
+  MAIL_PORT: z.string(),
+  MAIL_USERNAME: z.string(),
+  MAIL_PASSWORD: z.string(),
 
+});
 
 envSchema.parse(process.env);
 
 declare global {
-    namespace NodeJS {
-        interface ProcessEnv extends z.infer<typeof envSchema> {}
-    }
+  namespace NodeJS {
+    interface ProcessEnv extends z.infer<typeof envSchema> {}
+  }
 }

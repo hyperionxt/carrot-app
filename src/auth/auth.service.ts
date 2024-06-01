@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcrypt';
-
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { User } from '../users/entities/user.entity';
@@ -56,11 +55,10 @@ export class AuthService {
       if (error instanceof HttpException) {
         throw error;
       } else {
-        throw new HttpException(
-          'BAD REQUEST',
-          HttpStatus.BAD_REQUEST,
-        );
+        throw new HttpException('BAD REQUEST', HttpStatus.BAD_REQUEST);
       }
     }
   }
+
+
 }

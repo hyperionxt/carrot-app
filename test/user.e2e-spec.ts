@@ -53,11 +53,6 @@ beforeEach(async () => {
   await data.query('ALTER SEQUENCE users_id_seq RESTART WITH 1');
   await data.createQueryBuilder().delete().from(Recipe).execute();
   await data.query('ALTER SEQUENCE recipes_id_seq RESTART WITH 1');
-  // async function hassUserPass(initialUsersProfile) {
-  //   const passwordHash = await hash(initialUsersProfile.password, 10);
-  //   return { ...initialUsersProfile, password: passwordHash };
-  // }
-  // const hashedUser = await hassUserPass(initialUsersProfile);
 
   const hashedUsers = await Promise.all(
     initialUsersProfile.map(async (user) => {

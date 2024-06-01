@@ -118,6 +118,26 @@ export class UsersService {
     }
   }
 
+  async findOneByEmail(email: string): Promise<User> {
+    try {
+      const userFound = await this.userRepository.findOne({
+        where: { email: email },
+      });
+      if (!userFound)
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      return userFound;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new HttpException(
+          'Internal Server Error',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    }
+  }
+
   async update(id: number, user: UpdateUserDto): Promise<User> {
     try {
       const userFound = await this.userRepository.findOne({

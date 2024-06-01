@@ -16,8 +16,10 @@ import {
   DB_USERNAME,
   ENV,
   REDIS_HOST,
-  REDIS_LOCAL_PORT
+  REDIS_LOCAL_PORT,
 } from './config/vars.config';
+
+import { MailerModule } from './mailer/mailer.module';
 import { RecipesModule } from './recipes/recipes.module';
 import { UsersModule } from './users/users.module';
 import { DatabaseBackupAutoTask } from './utils/tasks-schedule/backups.autotask';
@@ -49,10 +51,20 @@ const dbName = ENV === 'test' ? DB_NAME_TEST : DB_NAME;
       }),
     }),
     EventEmitterModule.forRoot(),
+    // MailerModuleConfig.forRoot({
+    //   transport: {
+    //     host: MAIL_HOST,
+    //     auth: {
+    //       user: MAIL_USERNAME,
+    //       pass: MAIL_PASSWORD,
+    //     },
+    //   },
+    // }),
     UsersModule,
     AuthModule,
     AdminModule,
     RecipesModule,
+    MailerModule,
   ],
   controllers: [],
   providers: [DatabaseBackupAutoTask],

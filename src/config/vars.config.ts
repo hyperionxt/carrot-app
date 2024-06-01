@@ -29,5 +29,11 @@ export const BACKUP_PATH = process.env.BACKUP_PATH;
 export const REDIS_HOST = process.env.REDIS_HOST;
 export const REDIS_LOCAL_PORT = parseInt(process.env.REDIS_LOCAL_PORT);
 export const REDIS_CONTAINER_NAME = process.env.REDIS_CONTAINER_NAME;
-export const REDIS_TEST_CONTAINER_NAME = process.env.REDIS_TEST_CONTAINER_NAME;
-export const REDIS_TEST_LOCAL_PORT = parseInt(process.env.REDIS_TEST_LOCAL_PORT);
+
+
+//MAIL_SETUP
+export const MAIL_HOST = process.env.MAIL_HOST;
+export const MAIL_PORT = parseInt(process.env.MAIL_PORT);
+export const MAIL_USERNAME = process.env.MAIL_USERNAME;
+export const MAIL_PASSWORD = process.env.MAIL_PASSWORD;
+

@@ -37,6 +37,8 @@ export class User {
   favorites: Recipe[];
   @Column()
   role: Role;
+  @Column({ default: false })
+  confirmed: boolean;
   @CreateDateColumn({
     type: 'timestamp',
   })

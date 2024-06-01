@@ -10,6 +10,5 @@ import { AdminService } from './admin.service';
   imports: [TypeOrmModule.forFeature([User]), UsersModule, RecipesModule],
   controllers: [AdminController],
   providers: [AdminService],
-  exports: [],
 })
 export class AdminModule {}
