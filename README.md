@@ -5,6 +5,8 @@ This API REST serves to offer recipes based on ingredients as search parameters.
 
 ## Features
 
+SQL database.  
+TypeORM.  
 JWT.  
 Users profiles.  
 Users can save or delete recipes from their favorites list.  
@@ -15,11 +17,8 @@ Pagination.
 Validations.  
 Swagger documentation.  
 E2e tests.  
-Automatic backup database generator.
-
-## Features(in comming)
-
-Redis as cache database.  
+Automatic backup database generator.  
+Event-based cache invalidation with Redis.  
 Cloud storage for images.  
 Transactional emails to recover passwords.  
 
@@ -27,6 +26,7 @@ Transactional emails to recover passwords.
 
 ```bash
 $ pnpm install
+$ docker-compose up
 ```
 ```.env
 APP_PORT=XXXX
@@ -40,6 +40,9 @@ DB_NAME_TEST= db for testing
 JWT_SECRET_KEY= XXXXXXXXXXXXXXXXXXXXX
 DUMP_PATH= path of backup.bat
 BACKUP_PATH= path to save the backups
+REDIS_CONTAINER_NAME=XXXXXXX
+REDIS_LOCAL_PORT=XXXX
+REDIS_HOST=XXXXXXXX
 ```
 
 ## Running the app
