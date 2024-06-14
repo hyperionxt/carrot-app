@@ -32,7 +32,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/doc', app, document);
 
-    await app.listen(PORT);
+    await app.listen(PORT,"0.0.0.0");
   } catch (e) {
     throw new Error(e);
   }
