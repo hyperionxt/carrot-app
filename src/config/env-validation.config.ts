@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const envSchema = z.object({
-  //APP_PORT: z.string(),
+  PORT: z.string(),
   DB_PORT: z.string(),
   DB_TYPE: z.string(),
   DB_HOST: z.string(),
