@@ -14,7 +14,7 @@ const envSchema = z.object({
   //BACKUP_PATH: z.string(),
   REDIS_HOST: z.string(),
   REDIS_LOCAL_PORT: z.string(),
-  REDIS_CONTAINER_NAME: z.string(),
+  //REDIS_CONTAINER_NAME: z.string(),
   MAIL_HOST: z.string(),
   MAIL_PORT: z.string(),
   MAIL_USERNAME: z.string(),
