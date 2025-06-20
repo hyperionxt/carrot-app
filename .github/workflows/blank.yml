@@ -22,7 +22,8 @@ jobs:
           run: echo "Hello"
 
         - name: "Showing env variables"
+          if: ${{env.platform == 'azure'}}
           run: |
-            echo "Platform: $platform"
-            echo "Region: $region" 
-            echo "Account: $account"
+            echo "Platform: ${{env.platform}}"
+            echo "Region: ${{env.region}}" 
+            echo "Account: ${{env.account}}"
