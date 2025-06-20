@@ -13,5 +13,5 @@ jobs:
     runs-on: ubuntu
 
     steps:
-    - name : "hello"
-    - run: echo "Hello, This Is a Test"
+      - name : 'Hello'
+        run: echo "Testing"
