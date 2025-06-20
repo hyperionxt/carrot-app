@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  redis:
+    env_file: ./.env
+    container_name: $REDIS_CONTAINER_NAME
+    image: redis
+    ports:
+      - '$REDIS_LOCAL_PORT:$REDIS_LOCAL_PORT'
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:

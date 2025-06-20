@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const envSchema = z.object({
+export const envSchema = z.object({
   PORT: z.string(),
   DB_PORT: z.string(),
   DB_TYPE: z.string(),
