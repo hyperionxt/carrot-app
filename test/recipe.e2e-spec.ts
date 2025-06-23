@@ -6,7 +6,6 @@ import { AppModule } from '../src/app.module';
 import { Recipe } from '../src/recipes/entities/recipe.entity';
 
 import { CacheModule } from '@nestjs/cache-manager';
-import { redisStore } from 'cache-manager-redis-yet';
 import { REDIS_HOST, REDIS_LOCAL_PORT } from '../src/config/vars.config';
 import { TestLogger } from './helpers/auth.helpers';
 import { initialRecipesTop } from './helpers/recipe.helpers';
@@ -20,12 +19,10 @@ beforeAll(async () => {
       CacheModule.registerAsync({
         isGlobal: true,
         useFactory: async () => ({
-          store: await redisStore({
-            socket: {
-              host: REDIS_HOST,
-              port: REDIS_LOCAL_PORT
-            },
-          }),
+          socket: {
+            host: REDIS_HOST,
+            port: REDIS_LOCAL_PORT,
+          },
         }),
       }),
     ],
