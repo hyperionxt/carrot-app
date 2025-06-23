@@ -2,14 +2,14 @@ name: CI/CD
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: "Show message"
+      - name: 'Show message'
         run: echo "Showing message"
-        
