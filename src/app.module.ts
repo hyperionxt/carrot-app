@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { redisStore } from 'cache-manager-redis-yet';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import {
@@ -42,14 +41,14 @@ const dbName = ENV === 'test' ? DB_NAME_TEST : DB_NAME;
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: async () => ({
-        store: await redisStore({
+    
           socket: {
             host: REDIS_HOST,
             port: REDIS_LOCAL_PORT,
           },
         }),
       }),
-    }),
+    
     EventEmitterModule.forRoot(),
     // MailerModuleConfig.forRoot({
     //   transport: {
