@@ -17,6 +17,7 @@ jobs:
       - name: 'Show message'
         run: echo "Showing message"
       - name: 'Showing variables'
+        if: ${{env.platform == 'azure'}}
         run: |
           echo "platform: ${{env.platform}}"
           echo "region: ${{env.region}}"
