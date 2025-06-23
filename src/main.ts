@@ -4,7 +4,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import './config/env-validation.config';
-import { PORT } from './config/vars.config';
 import { UsersService } from './users/users.service';
 
 async function bootstrap() {
@@ -32,7 +31,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/doc', app, document);
 
-    await app.listen(PORT, "0.0.0.0");
+    await app.listen(3000);
   } catch (e) {
     throw new Error(e);
   }
