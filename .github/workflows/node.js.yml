@@ -14,13 +14,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4 # necessary to instal dependencies. it returns the repository infomation(folders,file)  
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.16.0
-      - uses: pnpm/action-setup@v4
+      - name: 'Checkout'
+        uses: actions/checkout@v4 # necessary to instal dependencies. it returns the repository infomation(folders,file)  
+      - name: 'pnpm as package manager'    
+        uses: pnpm/action-setup@v4
         with:
           version: 10
-      - run: pnpm i
-      - run: pnpm build
+      - name: 'Node v22.16.0'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+          cache: 'pnpm'
+
+      - name: 'Dependencies'    
+        run: pnpm i
+      - name: Build
+        run: pnpm build
  
