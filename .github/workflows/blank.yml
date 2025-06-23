@@ -1,33 +1,14 @@
-
-name: CI
+name: CI/CD
 
 on:
   push:
-    branches: [ "master" ]
-
-
-  
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
-  
   build:
-    env:
-      platform: aws
-      region: us-east-1
-      account: 1234125
     runs-on: ubuntu-latest
-
     steps:
-        - name: "Display Messaje"
-          run: echo "Hello"
-
-        - name: "Showing env variables"
-          if: ${{env.platform == 'azure'}}
-          run: |
-            echo "Platform: ${{env.platform}}"
-            echo "Region: ${{env.region}}" 
-            echo "Account: ${{env.account}}"
-
-        - name: "SHOWING VARIABLES BY DEFAULT"
-          run: |
-            echo "Event: ${{toJson(github.event)}}"
+      - name: "Show message"
+        run: echo "Showing message"
