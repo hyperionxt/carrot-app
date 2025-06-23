@@ -17,3 +17,8 @@ jobs:
     steps:
       - name: "Testing"
         run: echo "tesing...."
+      - name: "Date task"
+        run: date
+      - name: "It shows the dir content"
+        run: ls -la
+
