@@ -5,11 +5,18 @@ on:
     branches: ['main']
   pull_request:
     branches: ['main']
-  workflow_dispatch:
-
 jobs:
   build:
+    env:
+      platform: aws
+      region: us-east-1
+      account: 123557
     runs-on: ubuntu-latest
     steps:
       - name: 'Show message'
         run: echo "Showing message"
+      - name: 'Showing variables'
+        run: |
+          echo "platform: ${{env.platform}}"
+          echo "region: ${{env.region}}"
+          echo "account: ${{env.account}}"
