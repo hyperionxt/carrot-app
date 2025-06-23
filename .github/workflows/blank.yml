@@ -25,4 +25,4 @@ jobs:
     
       - name: "default variables"
         run: |
-          echo: "Event: ${{toJSON(github.event)}}"
+          echo "Event: ${{toJSON(github.event)}}"
