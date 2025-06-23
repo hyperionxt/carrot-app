@@ -12,20 +12,23 @@ jobs:
       platform: aws
       region: us-east-1
       account: 123557
+
+      username: ${{secrets.USERNAME}}
     runs-on: ubuntu-latest
     steps:
       - name: 'Show message'
         run: echo "Showing message"
       - name: 'Showing variables'
-        if: ${{env.platform == 'azure'}}
         run: |
           echo "platform: ${{env.platform}}"
           echo "region: ${{env.region}}"
           echo "account: ${{env.account}}"
+          echo "username: ${{env.username}}"
     
       - name: "default variables"
         run: |
           echo "Event: ${{toJson(github.event)}}"
           echo "Github_Actor $GITHUB_ACTOR"
+          
 
 
