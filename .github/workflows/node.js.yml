@@ -5,21 +5,20 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ['master']
   pull_request:
-    branches: [ "master" ]
+    branches: ['master']
 
 jobs:
   build: #it can be named like u want
-
     runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v4
-      - name: "Testing"
-        run: echo "tesing...."
-      - name: "Date task"
-        run: date
-      - name: "It shows the dir content"
-        run: ls -la
 
+    steps:
+      - uses: actions/checkout@v4 # necessary to instal dependencies. it returns the repository infomation(folders,file)  
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+          cache: 'pnpm'
+      - run: pnpm ci
+      - run: pnpm build
+ 
