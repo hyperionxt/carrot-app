@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import './config/env-validation.config';
+import { UsersService } from './users/users.service';
 
 
 async function bootstrap() {
@@ -15,7 +16,6 @@ async function bootstrap() {
       }),
     );
     const adminUserGenerator = app.get(UsersService);
-    
     await adminUserGenerator.createAdminUser();
     app.use(helmet());
     const config = new DocumentBuilder()
