@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 import './config/env-validation.config';
 import { UsersService } from './users/users.service';
 
+
 async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule);
@@ -26,7 +27,7 @@ async function bootstrap() {
       .addTag('Users', 'All that users are allowed to do')
       .addTag('Recipes', 'Recipes Management')
       .addTag('Admin', 'General Management')
-      .addTag('Mailer', 'Recovery password management')
+      .addTag('Mailer', 'Recovery password management.')
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/doc', app, document);
