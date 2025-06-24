@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import './config/env-validation.config';
-import { UsersService } from './users/users.service';
+
 
 async function bootstrap() {
   try {
