@@ -27,7 +27,7 @@ jobs:
           cache: 'pnpm'
 
       - name: 'Dependencies'    
-        run: pnpm i --no-found
+        run: pnpm i
       - name: Build
         run: pnpm build
  
