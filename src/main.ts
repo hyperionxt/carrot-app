@@ -15,6 +15,7 @@ async function bootstrap() {
       }),
     );
     const adminUserGenerator = app.get(UsersService);
+    
     await adminUserGenerator.createAdminUser();
     app.use(helmet());
     const config = new DocumentBuilder()
